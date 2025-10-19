@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Budgets des Citoyens</title>
+        <link rel="icon" type="image/png" href="assets/img/logo.png" />
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="assets/fonts/Camber/Camber.css" />
+        <link rel="stylesheet" href="assets/bootstrap/bootstrap-icons/font/bootstrap-icons.css" />
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
+    </head>
+    <body id="home" class="">
+        <header>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container nav">
+                    <a class="logo d-flex align-items-center h-100" href="#home">
+                        <img src="assets/img/logo.png" alt="Logo du Ministère de l'Economie et des Finances" class="ps-3 ps-md-0"/>
+                        <h1 class="m-0"></h1>
+                            Ministère de l'Economie <br />
+                            et des Finances
+                        </h1>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi-list" aria-hidden="true"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="mainNavbar">
+                        <ul class="nav-links navbar-nav ms-auto mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#home">Accueil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#about">À propos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#projects">Projets</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#contact">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main class="container">
+            <h1>
+                Budget des citoyens <br />
+                relatif à la <span class="ldf">Loi de finances 2025</span>
+            </h1>
+            <div class="sommaire">
+                <!-- Avant-Propos -->
+                <button id="avant-propos-btn">
+                    <p>Avant-Propos</p>
+                    <i class="bi-box-arrow-down-left"></i>
+                </button>
+                <div id="avant-propos-content"></div>
+
+                <!-- Perspectives économiques -->
+                <button id="perspectives-btn">
+                    <p>Perspectives économiques</p>
+                    <i class="bi-box-arrow-down-left"></i>
+                </button>
+                <div id="perspectives-content"></div>
+
+                <!-- Recettes -->
+                <button id="recettes-btn">
+                    <p>Recettes</p>
+                    <i class="bi-box-arrow-down-left"></i>
+                </button>
+                <div id="recettes-content"></div>
+
+                <!-- Dépenses -->
+                <button id="depenses-btn">
+                    <p>Dépenses</p>
+                    <i class="bi-box-arrow-down-left"></i>
+                </button>
+                <div id="depenses-content"></div>
+
+                <!-- Déficit Budgétaire -->
+                <button id="deficit-btn">
+                    <p>Déficit Budgétaire</p>
+                    <i class="bi-box-arrow-down-left"></i>
+                </button>
+                <div id="deficit-content"></div>
+
+                <!-- Extraits de dispositions fiscales et douanières -->
+                <button id="extraits-btn">
+                    <p>Extraits de dispositions fiscales et douanières</p>
+                    <i class="bi-box-arrow-down-left"></i>
+                </button>
+                <div id="extraits-content"></div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 Tony Mahefa. Tous droits réservés.</p>
+        </footer>
+    </body>
+    <script src="assets/js/avant-propos.js" defer></script>
+    <script src="assets/js/perspectives.js" defer></script>
+    <script src="assets/js/recettes.js" defer></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.js"></script>
+</html>

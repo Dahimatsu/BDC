@@ -1,0 +1,329 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Camber Regular", sans-serif;
+    scroll-behavior: smooth;
+    list-style: none;
+    color: #000000;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul {
+    margin-bottom: 0 !important;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    height: max-content;
+    background-color: rgba(0, 121, 135);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    padding-top: 70px;
+}
+
+.nav {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav a {
+    text-decoration: none;
+}
+
+nav i {
+    color: white;
+}
+
+.logo img {
+    width: 50px;
+}
+
+.logo {
+    font-size: 15px;
+    align-content: center;
+    font-family: "Camber SemiBold", sans-serif;
+    color: white;
+    gap: 5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #ffffff;
+    transition: 0.3s ease;
+}
+
+main h1 {
+    font-family: "Camber Thin", sans-serif;
+}
+
+main .ldf {
+    font-family: "Camber SemiBold", sans-serif;
+}
+
+main .sommaire {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sommaire button {
+    background-color: rgba(0, 121, 135);
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border-radius: 5px;
+    padding: 0 15px;
+}
+
+.sommaire button p {
+    font-family: "Camber SemiBold", sans-serif;
+    color: white;
+    transition: 0.3s ease;
+}
+
+.sommaire button i {
+    color: white;
+    transition: 0.3s ease;
+    display: none;
+}
+
+.sommaire button:hover i,
+.sommaire button:hover p {
+    font-size: larger;
+    display: inline;
+}
+
+.expanded {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 5px;
+    gap: 10px;
+}
+
+.signature {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+
+.signature img {
+    width: 200px;
+    padding-right: 20px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-title {
+    transition: 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+}
+
+.list-title h6 {
+    font-family: "Camber SemiBold", sans-serif;
+}
+
+.list-title i {
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.list-title:hover {
+    color: rgba(200, 231, 133);
+}
+
+.list-title-active,
+.list-title-active i {
+    color: rgba(200, 231, 133);
+}
+
+.list-title:hover i {
+    color: rgba(200, 231, 133);
+}
+
+.padding-paragraph {
+    padding-left: 25px;
+}
+
+.section-title,
+.mini-title {
+    color: #15becb;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.section-title:hover,
+.mini-title:hover {
+    color: rgba(200, 231, 133);
+    font-weight: bold;
+}
+
+.section-title-active,
+.mini-title-active {
+    font-weight: bold;
+}
+
+.div-figure-title,
+.div-table-title {
+    display: flex;
+    gap: 5px;
+}
+
+.div-figure,
+.div-table {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.content-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mini-title-purple {
+    display: flex;
+    align-items: center;
+    color: #8C6DBC;
+    cursor: pointer;
+    gap: 10px;
+    transition: 0.3s ease;
+    width: fit-content;
+}
+
+.mini-title-purple h6 {
+    font-weight: bold;
+}
+
+.mini-title-purple i {
+    color: #8C6DBC;
+    transition: 0.3s ease;
+    width: fit-content;
+}
+
+.mini-title-purple:hover,
+.mini-title-purple:hover i {
+    color: rgba(200, 231, 133);
+}
+
+.mini-title-blue {
+    display: flex;
+    align-items: center;
+    color: #15BECB;
+    cursor: pointer;
+    gap: 10px;
+    transition: 0.3s ease;
+    width: fit-content;
+}
+
+.mini-title-blue h6 {
+    transition: 0.3s ease;
+}
+
+.mini-title-blue i {
+    color: #15BECB;
+    transition: 0.3s ease;
+    width: fit-content;
+}
+
+.mini-title-blue:hover,
+.mini-title-blue:hover i {
+    color: rgba(200, 231, 133);
+}
+
+.mini-title-blue-active h6,
+.mini-title-blue-active i {
+    color: rgba(200, 231, 133);
+}
+
+.list-item ul li{
+    list-style-type: disc;
+}
+
+.sub-list li {
+    list-style: circle !important;
+}
+
+.rows {
+    transition: 0.3s ease;
+}
+
+.rows:hover {
+    background-color: #15bfcb5d !important;
+}
+
+table {
+    border-collapse: collapse;
+    min-width: fit-content;
+}
+
+footer {
+    background-color: rgba(0, 121, 135);
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+}
+
+footer p {
+    color: #ffffff;
+    font-family: "Camber SemiBold", sans-serif;
+}
