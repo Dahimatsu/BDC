@@ -1,0 +1,150 @@
+<style>
+    .chart-wrapper {
+        width: auto;
+        padding: 20px;
+        background-color: #f4f7fb;
+        border-radius: 8px;
+    }
+
+    .chart-subtitle {
+        text-align: right;
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .chart-area {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .bar-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .year-label {
+        width: 50px;
+        text-align: right;
+        padding-right: 65px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .stacked-bar {
+        display: flex;
+        flex: 1;
+        height: 40px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .segment {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 13px;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .impots {
+        background-color: #5d7cb8;
+    }
+    .douanes {
+        background-color: #15becb;
+    }
+    .recettes {
+        background-color: #96b716;
+    }
+    .dons {
+        background-color: #ffd65e;
+    }
+
+    .x-axis {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 65px;
+        border-top: 1px solid #ccc;
+        padding-top: 8px;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-top: 25px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .legend-color {
+        width: 15px;
+        height: 15px;
+    }
+</style>
+<div class="chart-wrapper">
+    <div class="chart-subtitle">(en milliards d'Ariary)</div>
+
+    <div class="chart-area">
+        <div class="bar-group">
+            <div class="year-label">2025</div>
+            <div class="stacked-bar">
+                <div class="segment impots" style="width: 40.2%">5 628,4</div>
+                <div class="segment douanes" style="width: 31.18%">4 366,0</div>
+                <div class="segment recettes" style="width: 0.8%"></div>
+                <div class="segment dons" style="width: 17.69%">2 476,6</div>
+            </div>
+        </div>
+
+        <div class="bar-group">
+            <div class="year-label">2024</div>
+            <div class="stacked-bar">
+                <div class="segment impots" style="width: 33.12%">4 636,5</div>
+                <div class="segment douanes" style="width: 26.91%">3 768,0</div>
+                <div class="segment recettes" style="width: 1%"></div>
+                <div class="segment dons" style="width: 7.76%">1 086,3</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x-axis">
+        <span>0</span>
+        <span>2 000,0</span>
+        <span>4 000,0</span>
+        <span>6 000,0</span>
+        <span>8 000,0</span>
+        <span>10 000,0</span>
+        <span>12 000,0</span>
+        <span>14 000,0</span>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #5d7cb8"></div>
+            <span>Impôts</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #15becb"></div>
+            <span>Douanes</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #96b716"></div>
+            <span>Recettes non fiscales</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #ffd65e"></div>
+            <span>Dons</span>
+        </div>
+    </div>
+</div>

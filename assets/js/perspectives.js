@@ -155,7 +155,7 @@
 
         for (let i = 0; i < section.data.length; i++) {
             const tr = document.createElement("tr");
-            
+
             tr.classList.add("rows");
 
             if (i % 2 == 0) {
@@ -169,7 +169,6 @@
             if (i % 3 == 0) {
                 tr.style.borderTop = "1px solid white";
             }
-
 
             for (let j = 0; j < section.data[i].length; j++) {
                 const td = document.createElement("td");
@@ -188,16 +187,24 @@
             tbody.appendChild(tr);
         }
     }
+    function createSource(source) {
+        const p = document.createElement("p");
+        p.style.width = "100%";
+        p.style.textAlign = "right";
 
-    const sourceTab1 = document.createElement("p");
-    sourceTab1.style.width = "100%";
-    sourceTab1.style.textAlign = "right";
-    const strongTab1 = document.createElement("strong");
-    strongTab1.textContent = "Source: ";
-    const emTab1 = document.createElement("em");
-    emTab1.textContent = "LF 2025, Tome 1";
-    sourceTab1.appendChild(strongTab1);
-    sourceTab1.appendChild(emTab1);
+        const strong = document.createElement("strong");
+        strong.textContent = "Source: ";
+
+        const em = document.createElement("em");
+        em.textContent = source;
+
+        p.appendChild(strong);
+        p.appendChild(em);
+
+        return p;
+    }
+    
+    const sourceTab1 = createSource("LF 2025, Tome I");
 
     // Tableau des taux de croissance sectorielle
     const divTable2 = document.createElement("div");
@@ -279,7 +286,6 @@
             const td = document.createElement("td");
             td.textContent = formatNumber(dataTab2[i][j]);
 
-            
             if (j > 0) {
                 td.style.textAlign = "center";
             }
@@ -311,15 +317,7 @@
         tbody2.appendChild(tr);
     }
 
-    const sourceTab2 = document.createElement("p");
-    sourceTab2.style.width = "100%";
-    sourceTab2.style.textAlign = "right";
-    const strongTab2 = document.createElement("strong");
-    strongTab2.textContent = "Source: ";
-    const emTab2 = document.createElement("em");
-    emTab2.textContent = "LF 2025, Tome 1";
-    sourceTab2.appendChild(strongTab2);
-    sourceTab2.appendChild(emTab2);
+    const sourceTab2 = createSource("LF 2025, Tome I");
 
     // Figure sur Évolution des croissances sectorielles
     const divFigure1 = document.createElement("div");
@@ -340,21 +338,11 @@
     titreFigure1.classList.add("mini-title");
     divTitreFigure1.appendChild(titreFigure1);
 
-    const figure1 = document.createElement("img");
-    figure1.src = "assets/img/figure-1.png";
-    figure1.alt = "Évolution des croissances sectorielles";
+    const divImageFigure1 = document.createElement("div");
 
-    const sourceFigure1 = document.createElement("p");
-    sourceFigure1.style.width = "100%";
-    sourceFigure1.style.textAlign = "right";
-    const strongF1 = document.createElement("strong");
-    strongF1.textContent = "Source: ";
-    const emFig1 = document.createElement("em");
-    emFig1.textContent = "LF 2025, Tome 1";
-    sourceFigure1.appendChild(strongF1);
-    sourceFigure1.appendChild(emFig1);
+    const sourceFigure1 = createSource("LF 2025, Tome I");
 
-    // Event 
+    // Event
     perspectivesBtn.addEventListener("click", () => {
         if (perspectivesContent.innerHTML == "") {
             perspectivesContent.appendChild(paragraphe1);
@@ -393,15 +381,26 @@
             });
 
             titreFigure1.addEventListener("click", () => {
-                if (divFigure1.contains(figure1)) {
+                if (!divImageFigure1.innerHTML.trim()) {
+                    fetch("pages/figure-1.html")
+                        .then((response) => {
+                            if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                            return response.text();
+                        })
+                        .then((html) => {
+                            divImageFigure1.innerHTML = html;
+                        });
+                }
+
+                if (divFigure1.contains(divImageFigure1)) {
                     titreFigure1.classList.remove("mini-title-active");
                     nomFigure1.style.fontWeight = "normal";
-                    divFigure1.removeChild(figure1);
+                    divFigure1.removeChild(divImageFigure1);
                     divFigure1.removeChild(sourceFigure1);
                 } else {
                     titreFigure1.classList.add("mini-title-active");
                     nomFigure1.style.fontWeight = "bold";
-                    divFigure1.appendChild(figure1);
+                    divFigure1.appendChild(divImageFigure1);
                     divFigure1.appendChild(sourceFigure1);
                 }
             });

@@ -1,0 +1,256 @@
+<style>
+    .chart-container {
+        width: auto;
+        padding: 20px;
+        background-color: #f4f7fb;
+        border-radius: 8px;
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .legend-color {
+        width: 15px;
+        height: 15px;
+    }
+
+    .main-chart-area {
+        position: relative;
+        padding-left: 50px;
+        padding-bottom: 40px;
+        height: 350px;
+    }
+
+    .y-axis-title {
+        position: absolute;
+        left: -50px;
+        top: 50%;
+        transform: translateY(-50%) rotate(-90deg);
+        color: #555;
+        font-weight: bold;
+    }
+
+    .chart {
+        display: flex;
+        justify-content: space-around;
+        height: 100%;
+        position: relative;
+    }
+
+    .y-labels-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 40px;
+        height: 100%;
+    }
+
+    .y-label,
+    .y-tick {
+        position: absolute;
+        width: 100%;
+        text-align: right;
+        padding-right: 10px;
+        font-size: 12px;
+        color: #333;
+    }
+
+    .grid-container {
+        position: absolute;
+        top: 0;
+        left: 46px;
+        width: calc(100% - 50px);
+        height: 100%;
+        z-index: 1;
+    }
+
+    .grid-line,
+    .zero-line {
+        position: absolute;
+        width: 100%;
+        left: 0;
+    }
+
+    .grid-line {
+        height: 1px;
+        background-color: #e0e0e0;
+    }
+
+    .zero-line {
+        height: 1.5px;
+        background-color: #888;
+    }
+
+    .y-axis-line {
+        position: absolute;
+        left: 45px;
+        top: 0;
+        width: 1.5px;
+        height: 100%;
+        background-color: #888;
+        z-index: 2;
+    }
+
+    .y-tick {
+        position: absolute;
+        left: 40px;
+        width: 5px;
+        height: 1.5px;
+        background-color: #888;
+        z-index: 3;
+    }
+
+    .sector {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        width: 150px;
+        position: relative;
+        z-index: 3;
+    }
+
+    .bars {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .bar {
+        width: 45px;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: height 0.3s;
+    }
+
+    .value-label {
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        position: absolute;
+    }
+
+    .bar.positive .value-label {
+        top: 8px;
+    }
+    .bar.negative .value-label {
+        bottom: 8px;
+    }
+
+    .bar2024 {
+        background-color: #15becb;
+        left: 25px;
+    }
+
+    .bar2025 {
+        background-color: #5d7cb8;
+        left: 70px;
+    }
+
+    .label {
+        position: absolute;
+        bottom: -50px;
+        font-size: 14px;
+        color: #333;
+    }
+</style>
+<div class="chart-container">
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #15becb"></div>
+            <span>LFR 2024</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #5d7cb8"></div>
+            <span>LFI 2025</span>
+        </div>
+    </div>
+
+    <div class="main-chart-area">
+        <div class="y-axis-title">En poucentage</div>
+
+        <div class="grid-container">
+            <div class="grid-line" style="top: 0px"></div>
+            <div class="grid-line" style="top: 50px"></div>
+            <div class="grid-line" style="top: 100px"></div>
+            <div class="grid-line" style="top: 150px"></div>
+            <div class="grid-line" style="top: 200px"></div>
+            <div class="zero-line" style="top: 250px"></div>
+            <div class="grid-line" style="top: 300px"></div>
+        </div>
+
+        <div class="chart">
+            <div class="sector">
+                <div class="bars">
+                    <div class="bar bar2024 positive" style="height: 132.5px; bottom: 60px; left: 25px">
+                        <div class="value-label">5,3</div>
+                    </div>
+                    <div class="bar bar2025 positive" style="height: 195px; bottom: 60px; left: 70px">
+                        <div class="value-label">7,8</div>
+                    </div>
+                </div>
+                <div class="label">Secteur primaire</div>
+            </div>
+
+            <div class="sector">
+                <div class="bars">
+                    <div class="bar bar2024 negative" style="height: 82.5px; top: 250px; left: 25px">
+                        <div class="value-label">-3,3</div>
+                    </div>
+                    <div class="bar bar2025 positive" style="height: 85px; bottom: 60px; left: 70px">
+                        <div class="value-label">3,4</div>
+                    </div>
+                </div>
+                <div class="label">Secteur secondaire</div>
+            </div>
+
+            <div class="sector">
+                <div class="bars">
+                    <div class="bar bar2024 positive" style="height: 125px; bottom: 60px; left: 25px">
+                        <div class="value-label">5,0</div>
+                    </div>
+                    <div class="bar bar2025 positive" style="height: 135px; bottom: 60px; left: 70px">
+                        <div class="value-label">5,4</div>
+                    </div>
+                </div>
+                <div class="label">Secteur tertiaire</div>
+            </div>
+        </div>
+
+        <div class="y-labels-container">
+            <div class="y-axis-line"></div>
+            <div class="y-label" style="top: -8px">10,0</div>
+            <div class="y-tick" style="top: 0px"></div>
+            <div class="y-label" style="top: 42px">8,0</div>
+            <div class="y-tick" style="top: 50px"></div>
+            <div class="y-label" style="top: 92px">6,0</div>
+            <div class="y-tick" style="top: 100px"></div>
+            <div class="y-label" style="top: 142px">4,0</div>
+            <div class="y-tick" style="top: 150px"></div>
+            <div class="y-label" style="top: 192px">2,0</div>
+            <div class="y-tick" style="top: 200px"></div>
+            <div class="y-label" style="top: 242px">0,0</div>
+            <div class="y-tick" style="top: 250px"></div>
+            <div class="y-label" style="top: 292px">-2,0</div>
+            <div class="y-tick" style="top: 300px"></div>
+            <div class="y-label" style="top: 342px">-4,0</div>
+            <div class="y-tick" style="top: 350px"></div>
+        </div>
+    </div>
+</div>

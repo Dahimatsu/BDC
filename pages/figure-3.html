@@ -1,0 +1,144 @@
+<style>
+    .chart-wrapper {
+        width: auto;
+        padding: 20px;
+        background-color: #f4f7fb;
+        border-radius: 8px;
+    }
+
+    .chart-subtitle {
+        text-align: right;
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .chart-area {
+        display: flex;
+    }
+
+    .y-axis {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 60px; /* Espace pour les labels */
+        text-align: right;
+        padding-right: 10px;
+        font-size: 13px;
+        color: #666;
+    }
+
+    .main-chart {
+        flex: 1;
+        border-bottom: 2px solid #333;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end; 
+        padding: 0 40px;
+    }
+
+    .year-group {
+        height: 100%;
+        display: flex;
+        gap: 15px; 
+        align-items: flex-end;
+        position: relative;
+    }
+
+    .year-label-x {
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-weight: bold;
+        color: #333;
+    }
+
+    .bar {
+        width: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .value-label {
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 10px;
+    }
+
+    .impots {
+        background-color: #5d7cb8;
+    }
+    .douanes {
+        background-color: #15becb;
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-top: 50px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .legend-color {
+        width: 15px;
+        height: 15px;
+    }
+</style>
+<div class="chart-wrapper">
+    <div class="chart-subtitle">(en milliards d'Ariary)</div>
+
+    <div class="chart-area" style="height: 300px">
+        <div class="y-axis">
+            <span>6 000,0</span>
+            <span>5 000,0</span>
+            <span>4 000,0</span>
+            <span>3 000,0</span>
+            <span>2 000,0</span>
+            <span>1 000,0</span>
+            <span>0,0</span>
+        </div>
+        <div class="main-chart">
+            <div class="year-group">
+                <div class="bar impots" style="height: 77.2%">
+                    <span class="value-label">4 636,5</span>
+                </div>
+                <div class="bar douanes" style="height: 62.8%">
+                    <span class="value-label">3 768,0</span>
+                </div>
+                <div class="year-label-x">2024</div>
+            </div>
+
+            <div class="year-group">
+                <div class="bar impots" style="height: 93.8%">
+                    <span class="value-label">5 628,4</span>
+                </div>
+                <div class="bar douanes" style="height: 72.7%">
+                    <span class="value-label">4 366,0</span>
+                </div>
+                <div class="year-label-x">2025</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #5d7cb8"></div>
+            <span>Impôts</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #15becb"></div>
+            <span>Douanes</span>
+        </div>
+    </div>
+</div>

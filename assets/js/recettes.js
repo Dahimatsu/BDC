@@ -41,19 +41,26 @@
     titreFigure2.classList.add("mini-title");
     divTitreFigure2.appendChild(titreFigure2);
 
-    const figure2 = document.createElement("img");
-    figure2.src = "assets/img/figure-2.png";
-    figure2.alt = "Évolution des croissances sectorielles";
+    const divImageFigure2 = document.createElement("div");
 
-    const sourceFigure2 = document.createElement("p");
-    sourceFigure2.style.width = "100%";
-    sourceFigure2.style.textAlign = "right";
-    const strongF2 = document.createElement("strong");
-    strongF2.textContent = "Source: ";
-    const emFig2 = document.createElement("em");
-    emFig2.textContent = "LF 2025";
-    sourceFigure2.appendChild(strongF2);
-    sourceFigure2.appendChild(emFig2);
+    function createSource(source) {
+        const p = document.createElement("p");
+        p.style.width = "100%";
+        p.style.textAlign = "right";
+
+        const strong = document.createElement("strong");
+        strong.textContent = "Source: ";
+
+        const em = document.createElement("em");
+        em.textContent = source;
+
+        p.appendChild(strong);
+        p.appendChild(em);
+
+        return p;
+    }
+
+    const sourceFigure2 = createSource("LF 2025, Tome I");
 
     // Recettes fiscales intérieures
     const divRecetteFiscaleInterieure = document.createElement("div");
@@ -158,6 +165,86 @@
         divListRecetteFiscaleInterieure.appendChild(itemRow);
     });
 
+    function tableBuilder(headers, data) {
+        const tableau = document.createElement("table");
+        tableau.style.borderCollapse = "collapse";
+        tableau.style.width = "100%";
+
+        // ====== THEAD ======
+        const thead = document.createElement("thead");
+        tableau.appendChild(thead);
+
+        const headerRow = document.createElement("tr");
+        thead.appendChild(headerRow);
+
+        for (let i = 0; i < headers.length; i++) {
+            const th = document.createElement("th");
+            th.textContent = headers[i];
+            th.style.padding = "8px";
+            th.style.backgroundColor = "#15BECB";
+            th.style.color = "white";
+            th.style.fontWeight = "bold";
+            th.style.textAlign = i === 0 ? "left" : "center";
+            headerRow.appendChild(th);
+        }
+
+        // ====== TBODY ======
+        const tbody = document.createElement("tbody");
+        tableau.appendChild(tbody);
+
+        for (let i = 0; i < data.length; i++) {
+            const row = document.createElement("tr");
+            row.classList.add("rows");
+
+            if (i % 2 === 0) {
+                row.style.backgroundColor = "#EBF3F9";
+                row.style.borderBottom = "1px solid rgba(0, 121, 135)";
+                row.style.borderTop = "1px solid rgba(0, 121, 135)";
+            } else {
+                row.style.backgroundColor = "white";
+            }
+
+            for (let j = 0; j < data[i].length; j++) {
+                const cell = document.createElement("td");
+                const cellData = formatNumber(data[i][j]);
+                cell.textContent = cellData;
+                cell.style.padding = "8px";
+                cell.style.textAlign = j === 0 ? "left" : "center";
+                if (j === 0) cell.style.fontWeight = "bold";
+                row.appendChild(cell);
+            }
+
+            tbody.appendChild(row);
+        }
+
+        // ====== TFOOT ======
+        const tfoot = document.createElement("tfoot");
+        const footerRow = document.createElement("tr");
+        footerRow.style.backgroundColor = "rgba(200, 231, 133)";
+        footerRow.style.color = "white";
+        footerRow.style.fontWeight = "bold";
+
+        const totalCell = document.createElement("td");
+        totalCell.textContent = "TOTAL";
+        totalCell.style.textAlign = "left";
+        totalCell.style.padding = "8px";
+        footerRow.appendChild(totalCell);
+
+        // Calcule les totaux colonnes numériques
+        for (let i = 1; i < headers.length; i++) {
+            const cell = document.createElement("td");
+            const total = data.reduce((acc, row) => acc + row[i], 0);
+            cell.textContent = formatNumber(total);
+            cell.style.textAlign = "center";
+            footerRow.appendChild(cell);
+        }
+
+        tfoot.appendChild(footerRow);
+        tableau.appendChild(tfoot);
+
+        return tableau;
+    }
+
     const recetteFiscaleInterieureText3 = document.createElement("p");
     recetteFiscaleInterieureText3.textContent = "Les prévisions par nature d’impôt se répartissent comme suit :";
 
@@ -177,35 +264,7 @@
     titreTab3.classList.add("mini-title");
     divTitreTab3.appendChild(titreTab3);
 
-    const tableau3 = document.createElement("table");
-    tableau3.style.borderCollapse = "collapse";
-    tableau3.style.width = "100%";
-
-    const thead3 = document.createElement("thead");
-    tableau3.appendChild(thead3);
-
-    const headerRow3 = document.createElement("tr");
-    thead3.appendChild(headerRow3);
-
     const headers3 = ["Nature d’impôt (en milliards d’Ariary)", "LFR 2024 ", "LFR 2025 "];
-
-    for (let i = 0; i < headers3.length; i++) {
-        const th = document.createElement("th");
-        th.textContent = headers3[i];
-        th.style.padding = "8px";
-        th.style.backgroundColor = "#15BECB";
-        th.style.color = "white";
-        th.style.fontWeight = "bold";
-        if (i == 0) {
-            th.style.textAlign = "left";
-        } else {
-            th.style.textAlign = "center";
-        }
-        headerRow3.appendChild(th);
-    }
-
-    const tbody3 = document.createElement("tbody");
-    tableau3.appendChild(tbody3);
     const data3 = [
         ["Impôt sur les revenus", 1179.0, 1411.4],
         ["Impôt sur les revenus Salariaux et Assimilés", 848.2, 889.9],
@@ -221,74 +280,264 @@
         ["Autres", 1.5, 2.7],
     ];
 
-    for (let i = 0; i < data3.length; i++) {
-        const rowData = data3[i];
-        const row = document.createElement("tr");
+    const tableau3 = tableBuilder(headers3, data3);
 
-        row.classList.add("rows");
+    const sourceTab3 = createSource("LF 2025");
 
-        if (i % 2 == 0) {
-            row.style.backgroundColor = "#EBF3F9";
-            row.style.borderBottom = "1px solid rgba(0, 121, 135)";
-            row.style.borderTop = "1px solid rgba(0, 121, 135)";
-        } else {
-            row.style.backgroundColor = "white";
-        }
+    // Recettes Douanières
+    const divRecetteDouaniere = document.createElement("div");
+    divRecetteDouaniere.classList.add("content-section");
 
-        for (let j = 0; j < rowData.length; j++) {
-            const cellData = formatNumber(rowData[j]);
-            const cell = document.createElement("td");
-            cell.textContent = cellData;
-            cell.style.padding = "8px";
-            if (j == 0) {
-                cell.style.textAlign = "left";
-                cell.style.fontWeight = "bold";
+    const divTitreRecetteDouaniere = document.createElement("div");
+    divTitreRecetteDouaniere.classList.add("mini-title-blue");
+    divRecetteDouaniere.appendChild(divTitreRecetteDouaniere);
+
+    const iconRecetteDouaniere = document.createElement("i");
+    iconRecetteDouaniere.classList.add("bi", "bi-caret-right-fill");
+    divTitreRecetteDouaniere.appendChild(iconRecetteDouaniere);
+
+    const recetteDouaniereTitle = document.createElement("h6");
+    recetteDouaniereTitle.textContent = "Recettes douanières";
+    divTitreRecetteDouaniere.appendChild(recetteDouaniereTitle);
+    recetteDouaniereTitle.classList.add("section-title");
+
+    const recetteDouaniereText1 = document.createElement("strong");
+    recetteDouaniereText1.textContent =
+        "La prévision des recettes douanières pour l’année 2025 s’élève à 4 366,0 milliards d’Ariary soit une hausse de 15,9% par rapport à la prévision de 2024. Cette progression est portée par plusieurs réformes stratégiques, notamment :";
+
+    const recetteDouaniereList = [
+        {
+            titre: "Modérnisation des processus",
+            contenus: ["Dématérialisation des exonérations pour un contrôle fiscal renforcé ;", "Surveillance accrue des Zones Franches et des importateurs pour optimiser la gestion des recettes."],
+        },
+        {
+            titre: "Révision du code des Douanes",
+            contenus: ["Encadrement des Zones Économiques Spéciales (ZES) ;", "Renforcement des déclarations en douane et harmonisation des mesures tarifaires."],
+        },
+        {
+            titre: "Modification tarifaire",
+            contenus: [
+                "Augmentation des droits sur les produits de luxe et les biens technologiques (ex. catamaran, navire de plaisance, etc.) ;",
+                "Fiscalité adaptée pour encourager la production locale et protéger l’industrie nationale.",
+            ],
+        },
+        {
+            titre: "Conformité internationale",
+            contenus: ["Alignement sur le Système Harmonisé 2022 et respect des accords commerciaux pour sécuriser les recettes douanières."],
+        },
+    ];
+
+    const divListRecetteDouaniere = document.createElement("div");
+    divListRecetteDouaniere.classList.add("list");
+
+    recetteDouaniereList.forEach((liste) => {
+        const divTitre = document.createElement("div");
+        divTitre.classList.add("mini-title-purple");
+
+        const titreListe = document.createElement("h6");
+        titreListe.textContent = liste.titre;
+
+        const icon = document.createElement("i");
+        icon.classList.add("bi", "bi-caret-right-fill");
+        divTitre.appendChild(icon);
+        divTitre.appendChild(titreListe);
+
+        const listLigne = document.createElement("div");
+        listLigne.classList.add("list-item");
+
+        listLigne.appendChild(divTitre);
+
+        const contenuList = document.createElement("ul");
+        liste.contenus.forEach((contenu) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = contenu;
+            contenuList.appendChild(listItem);
+        });
+
+        titreListe.addEventListener("click", () => {
+            if (listLigne.contains(contenuList)) {
+                listLigne.removeChild(contenuList);
+                icon.classList.remove("bi-caret-down-fill");
+                icon.classList.add("bi-caret-right-fill");
             } else {
-                cell.style.textAlign = "center";
+                listLigne.appendChild(contenuList);
+                icon.classList.remove("bi-caret-right-fill");
+                icon.classList.add("bi-caret-down-fill");
             }
-            row.appendChild(cell);
-        }
-        tbody3.appendChild(row);
-    }
+        });
 
-    const tfoot3 = document.createElement("tfoot");
-    const footerRow3 = document.createElement("tr");
-    footerRow3.style.backgroundColor = "rgba(200, 231, 133)";
-    footerRow3.style.color = "white";
-    footerRow3.style.fontWeight = "bold";
+        divListRecetteDouaniere.appendChild(listLigne);
+    });
 
-    const totalCell = document.createElement("td");
-    totalCell.textContent = "TOTAL";
-    totalCell.style.textAlign = "left";
-    totalCell.style.padding = "8px";
-    footerRow3.appendChild(totalCell);
+    const recetteDouaniereText2 = document.createElement("p");
+    recetteDouaniereText2.textContent = "Ces initiatives visent à maximiser les revenus, soutenir l’économie locale et renforcer la compétitivité de Madagascar.";
 
-    for (let i = 0; i < 2; i++) {
-        const cell = document.createElement("td");
-        total = data3.reduce((acc, row) => acc + row[i + 1], 0);
-        cell.textContent = formatNumber(total);
-        cell.style.textAlign = "center";
-        footerRow3.appendChild(cell);
-    }
+    const divTable4 = document.createElement("div");
+    divTable4.classList.add("div-table");
 
-    tfoot3.appendChild(footerRow3);
-    tableau3.appendChild(tfoot3);
+    const divTitreTab4 = document.createElement("div");
+    divTitreTab4.classList.add("div-table-title");
+    divTable4.appendChild(divTitreTab4);
 
-    const sourceTab3 = document.createElement("p");
-    sourceTab3.style.width = "100%";
-    sourceTab3.style.textAlign = "right";
-    const strongTab3 = document.createElement("strong");
-    strongTab3.textContent = "Source: ";
-    const emTab3 = document.createElement("em");
-    emTab3.textContent = "LF 2025";
-    sourceTab3.appendChild(strongTab3);
-    sourceTab3.appendChild(emTab3);
+    const nomTable4 = document.createElement("h6");
+    nomTable4.textContent = "Tableau 4.";
+    divTitreTab4.appendChild(nomTable4);
+
+    const titreTab4 = document.createElement("h6");
+    titreTab4.textContent = "Recettes Douanières";
+    titreTab4.classList.add("mini-title");
+    divTitreTab4.appendChild(titreTab4);
+
+    const headers4 = ["NATURE DES DROITS ET TAXES (en milliards d’Ariary)", "LFR 2024 ", "LFR 2025 "];
+    const data4 = [
+        ["Droit de douane", 847.5, 1010.7],
+        ["TVA à l'importation", 1768.3, 2148.3],
+        ["Taxe sur les produits pétroliers", 308.0, 326.0],
+        ["TVA sur les produits pétroliers", 842.8, 879.0],
+        ["Droit de navigation", 1.2, 1.9],
+        ["Autres", 0.2, 0.1],
+    ];
+
+    const tableau4 = tableBuilder(headers4, data4);
+
+    const sourceTab4 = createSource("LF 2025");
+
+    const textTab4 = document.createElement("p");
+    textTab4.textContent =
+        "Les recettes fiscales intérieures et douanières atteignent un total de 9 994,4 milliards d’Ariary en 2025, marquant une augmentation de 1 589,9 milliards d’Ariary par rapport aux prévisions de 2024. Cette hausse correspond à un taux d’augmentation de 18,9 %.";
+
+    const divFigure3 = document.createElement("div");
+    divFigure3.classList.add("div-figure");
+    divFigure3.style.width = "100%";
+    divFigure3.style.maxWidth = "100%";
+
+    const divTitreFigure3 = document.createElement("div");
+    divTitreFigure3.classList.add("div-figure-title");
+    divFigure3.appendChild(divTitreFigure3);
+
+    const nomFigure3 = document.createElement("h6");
+    nomFigure3.textContent = "Figure 3.";
+    divTitreFigure3.appendChild(nomFigure3);
+
+    const titreFigure3 = document.createElement("h6");
+    titreFigure3.textContent = "Évolution des recettes fiscales et douanières";
+    titreFigure3.classList.add("mini-title");
+    divTitreFigure3.appendChild(titreFigure3);
+
+    const divImageFigure3 = document.createElement("div");
+
+    const sourceFigure3 = createSource("LF 2025, Tome I");
+
+    const textFigure3 = document.createElement("p");
+    textFigure3.textContent =
+        "Les projections des recettes fiscales intérieures pour les années 2025 à 2028 prévoient une croissance progressive, passant de 5 578,4 milliards d’Ariary en 2025 à 7 571,6 milliards d’Ariary en 2028, avec des taux de pression fiscale bruts variant entre 6,31 % et 6,13 % du PIB. Pour les recettes douanières, des efforts seront déployés pour poursuivre la digitalisation, la modernisation des infrastructures et la gestion des risques, avec un taux de pression fiscale douanière estimé à 6,1 % du PIB à moyen terme.";
+
+    // Recettes non fiscales
+    const divRecetteNonFiscale = document.createElement("div");
+    divRecetteNonFiscale.classList.add("content-section");
+
+    const divTitreRecetteNonFiscale = document.createElement("div");
+    divTitreRecetteNonFiscale.classList.add("mini-title-blue");
+    divRecetteNonFiscale.appendChild(divTitreRecetteNonFiscale);
+
+    const iconRecetteNonFiscale = document.createElement("i");
+    iconRecetteNonFiscale.classList.add("bi", "bi-caret-right-fill");
+    divTitreRecetteNonFiscale.appendChild(iconRecetteNonFiscale);
+
+    const recetteNonFiscaleTitle = document.createElement("h6");
+    recetteNonFiscaleTitle.textContent = "Recettes non fiscales";
+    divTitreRecetteNonFiscale.appendChild(recetteNonFiscaleTitle);
+    recetteNonFiscaleTitle.classList.add("section-title");
+
+    const recetteNonFiscaleText = document.createElement("p");
+    recetteNonFiscaleText.innerHTML =
+        "En 2024, les recettes non fiscales atteindront <strong>345,9 milliards d’Ariary</strong>, en <strong>hausse de 64,4 %</strong> grâce au recouvrement exceptionnel des arriérés de loyer de SUCCOMA. Elles devraient augmenter à <strong>491,7 milliards d'Ariary</strong> en 2025 <strong>(0,6 % du PIB)</strong>, portées par les recettes minières <strong>(67,4 %),</strong> liées au lancement de plusieurs projets miniers et les dividendes <strong>(57,1 %)</strong>. A partir de 2026, elles se stabiliseront à <strong>0,25 % du PIB.</strong>";
+
+    const divTable5 = document.createElement("div");
+    divTable5.classList.add("div-table");
+
+    const divTitreTab5 = document.createElement("div");
+    divTitreTab5.classList.add("div-table-title");
+    divTable5.appendChild(divTitreTab5);
+
+    const nomTable5 = document.createElement("h6");
+    nomTable5.textContent = "Tableau 5.";
+    divTitreTab5.appendChild(nomTable5);
+
+    const titreTab5 = document.createElement("h6");
+    titreTab5.textContent = "Recettes Non Fiscales";
+    titreTab5.classList.add("mini-title");
+    divTitreTab5.appendChild(titreTab5);
+
+    const headers5 = ["RECETTES NON FISCALES (en milliards d’Ariary)", "LFR 2024 ", "LFR 2025 "];
+    const data5 = [
+        ["Dividendes", 89.5, 120.2],
+        ["Productions immobilières financières", 0.5, 2.1],
+        ["Redevance de pêche", 10.0, 15.0],
+        ["Redevance minières", 84.9, 331.2],
+        ["Autres redevance", 9.7, 10.0],
+        ["Produits des activités et autres", 11.1, 8.1],
+        ["Autres", 140.1, 5.2],
+    ];
+
+    const tableau5 = tableBuilder(headers5, data5);
+
+    const sourceTab5 = createSource("LF 2025, Tome II");
+
+    // Dons
+    const divDons = document.createElement("div");
+    divDons.classList.add("content-section");
+
+    const divTitreDons = document.createElement("div");
+    divTitreDons.classList.add("mini-title-blue");
+
+    const iconDons = document.createElement("i");
+    iconDons.classList.add("bi", "bi-caret-right-fill");
+    divTitreDons.appendChild(iconDons);
+
+    const donsTitle = document.createElement("h6");
+    donsTitle.textContent = "Dons";
+    divTitreDons.appendChild(donsTitle);
+    donsTitle.classList.add("section-title");
+    divDons.appendChild(divTitreDons);
+
+    const donsText = document.createElement("p");
+    donsText.innerHTML =
+        "En 2025, les dons attendus s'élèveront à <strong>2 476,6 milliards d'Ariary</strong>, incluant <strong> 445,6 milliards d'Ariary</strong> pour les dons projets et <strong>31,0 milliards d'Ariary</strong> pour la reconstitution des FCV et aides budgétaires.";
+
+    const divTable6 = document.createElement("div");
+    divTable6.classList.add("div-table");
+
+    const divTitreTab6 = document.createElement("div");
+    divTitreTab6.classList.add("div-table-title");
+    divTable6.appendChild(divTitreTab6);
+
+    const nomTable6 = document.createElement("h6");
+    nomTable6.textContent = "Tableau 6.";
+    divTitreTab6.appendChild(nomTable6);
+
+    const titreTab6 = document.createElement("h6");
+    titreTab6.textContent = "Composition des Dons";
+    titreTab6.classList.add("mini-title");
+    divTitreTab6.appendChild(titreTab6);
+
+    const headers6 = ["RUBRIQUES (en milliards d’Ariary)", "LFR 2024 ", "LFR 2025 "];
+    const data6 = [
+        ["Courants", 0.3, 31.0],
+        ["Capital", 1086.0, 2476.6],
+    ];
+    const tableau6 = tableBuilder(headers6, data6);
+
+    const sourceTab6 = createSource("LF 2025, Tome I");
 
     // Event
     recettesBtn.addEventListener("click", () => {
         if (recettesContent.innerHTML == "") {
             recettesContent.appendChild(divRecetteParSource);
             recettesContent.appendChild(divRecetteFiscaleInterieure);
+            recettesContent.appendChild(divRecetteDouaniere);
+            recettesContent.appendChild(divRecetteNonFiscale);
+            recettesContent.appendChild(divDons);
 
             recetteParSourceTitle.addEventListener("click", () => {
                 if (divRecetteParSource.contains(recetteParSourceText)) {
@@ -309,15 +558,27 @@
             });
 
             titreFigure2.addEventListener("click", () => {
-                if (divFigure2.contains(figure2)) {
+                if (!divImageFigure2.innerHTML.trim()) {
+                    fetch("pages/figure-2.html")
+                        .then((response) => {
+                            if (response.ok) {
+                                return response.text();
+                            }
+                            throw new Error("Erreur lors du chargement de la figure 2");
+                        })
+                        .then((html) => {
+                            divImageFigure2.innerHTML = html;
+                        });
+                }
+                if (divFigure2.contains(divImageFigure2)) {
                     titreFigure2.classList.remove("mini-title-active");
                     nomFigure2.style.fontWeight = "normal";
-                    divFigure2.removeChild(figure2);
-                    sourceFigure2.remove();
+                    divFigure2.removeChild(divImageFigure2);
+                    divFigure2.removeChild(sourceFigure2);
                 } else {
                     titreFigure2.classList.add("mini-title-active");
                     nomFigure2.style.fontWeight = "bold";
-                    divFigure2.appendChild(figure2);
+                    divFigure2.appendChild(divImageFigure2);
                     divFigure2.appendChild(sourceFigure2);
                 }
             });
@@ -361,6 +622,146 @@
                     nomTable3.style.fontWeight = "bold";
                     divTable3.appendChild(tableau3);
                     divTable3.appendChild(sourceTab3);
+                }
+            });
+
+            recetteDouaniereTitle.addEventListener("click", () => {
+                if (divRecetteDouaniere.contains(recetteDouaniereText1)) {
+                    divRecetteDouaniere.removeChild(recetteDouaniereText1);
+                    divRecetteDouaniere.removeChild(divListRecetteDouaniere);
+                    divRecetteDouaniere.removeChild(recetteDouaniereText2);
+                    divRecetteDouaniere.removeChild(divTable4);
+                    divRecetteDouaniere.removeChild(divFigure3);
+
+                    recetteDouaniereTitle.classList.remove("section-title-active");
+                    iconRecetteDouaniere.classList.remove("bi-caret-down-fill");
+                    iconRecetteDouaniere.classList.add("bi-caret-right-fill");
+                } else {
+                    divRecetteDouaniere.appendChild(recetteDouaniereText1);
+                    divRecetteDouaniere.appendChild(divListRecetteDouaniere);
+                    divRecetteDouaniere.appendChild(recetteDouaniereText2);
+                    divRecetteDouaniere.appendChild(divTable4);
+                    divRecetteDouaniere.appendChild(divFigure3);
+
+                    recetteDouaniereTitle.classList.add("section-title-active");
+                    iconRecetteDouaniere.classList.remove("bi-caret-right-fill");
+                    iconRecetteDouaniere.classList.add("bi-caret-down-fill");
+                }
+            });
+
+            titreTab4.addEventListener("click", () => {
+                if (divTable4.contains(tableau4)) {
+                    nomTable4.classList.remove("mini-title-active");
+                    titreTab4.classList.remove("mini-title-active");
+                    nomTable4.style.fontWeight = "normal";
+                    divTable4.removeChild(tableau4);
+                    divTable4.removeChild(sourceTab4);
+                    divTable4.removeChild(textTab4);
+                } else {
+                    nomTable4.classList.add("mini-title-active");
+                    titreTab4.classList.add("mini-title-active");
+                    nomTable4.style.fontWeight = "bold";
+                    divTable4.appendChild(tableau4);
+                    divTable4.appendChild(sourceTab4);
+                    divTable4.appendChild(textTab4);
+                }
+            });
+
+            titreFigure3.addEventListener("click", () => {
+                if (!divImageFigure3.innerHTML.trim()) {
+                    fetch("pages/figure-3.html")
+                        .then((response) => {
+                            if (response.ok) {
+                                return response.text();
+                            }
+                            throw new Error("Network response was not ok.");
+                        })
+                        .then((html) => {
+                            divImageFigure3.innerHTML = html;
+                        });
+                }
+                if (divFigure3.contains(divImageFigure3)) {
+                    titreFigure3.classList.remove("mini-title-active");
+                    nomFigure3.style.fontWeight = "normal";
+                    divFigure3.removeChild(divImageFigure3);
+                    divFigure3.removeChild(sourceFigure3);
+                    divFigure3.removeChild(textFigure3);
+                } else {
+                    titreFigure3.classList.add("mini-title-active");
+                    nomFigure3.style.fontWeight = "bold";
+                    divFigure3.appendChild(divImageFigure3);
+                    divFigure3.appendChild(sourceFigure3);
+                    divFigure3.appendChild(textFigure3);
+                }
+            });
+
+            recetteNonFiscaleTitle.addEventListener("click", () => {
+                if (divRecetteNonFiscale.contains(recetteNonFiscaleText)) {
+                    recetteNonFiscaleTitle.classList.remove("section-title-active");
+                    divRecetteNonFiscale.removeChild(recetteNonFiscaleText);
+                    divRecetteNonFiscale.removeChild(divTable5);
+
+                    iconRecetteNonFiscale.classList.remove("bi-caret-down-fill");
+                    iconRecetteNonFiscale.classList.add("bi-caret-right-fill");
+                } else {
+                    recetteNonFiscaleTitle.classList.add("section-title-active");
+                    divRecetteNonFiscale.appendChild(recetteNonFiscaleText);
+                    divRecetteNonFiscale.appendChild(divTable5);
+
+                    iconRecetteNonFiscale.classList.remove("bi-caret-right-fill");
+                    iconRecetteNonFiscale.classList.add("bi-caret-down-fill");
+                }
+            });
+
+            titreTab5.addEventListener("click", () => {
+                if (divTable5.contains(tableau5)) {
+                    nomTable5.classList.remove("mini-title-active");
+                    titreTab5.classList.remove("mini-title-active");
+                    nomTable5.style.fontWeight = "normal";
+                    divTable5.removeChild(tableau5);
+                    divTable5.removeChild(sourceTab5);
+                } else {
+                    nomTable5.classList.add("mini-title-active");
+                    titreTab5.classList.add("mini-title-active");
+                    nomTable5.style.fontWeight = "bold";
+                    divTable5.appendChild(tableau5);
+                    divTable5.appendChild(sourceTab5);
+                }
+            });
+
+            donsTitle.addEventListener("click", () => {
+                if (divDons.contains(donsText)) {
+                    donsTitle.classList.remove("section-title-active");
+                    divDons.removeChild(donsText);
+                    divDons.removeChild(divTable6);
+
+                    iconDons.classList.remove("bi-caret-down-fill");
+                    iconDons.classList.add("bi-caret-right-fill");
+                } else {
+                    donsTitle.classList.add("section-title-active");
+                    divDons.appendChild(donsText);
+                    divDons.appendChild(divTable6);
+
+                    iconDons.classList.remove("bi-caret-right-fill");
+                    iconDons.classList.add("bi-caret-down-fill");
+                }
+            });
+
+            titreTab6.addEventListener("click", () => {
+                if (divTable6.contains(tableau6)) {
+                    nomTable6.classList.remove("mini-title-active");
+                    titreTab6.classList.remove("mini-title-active");
+                    nomTable6.style.fontWeight = "normal";
+
+                    divTable6.removeChild(tableau6);
+                    divTable6.removeChild(sourceTab6);
+                } else {
+                    nomTable6.classList.add("mini-title-active");
+                    titreTab6.classList.add("mini-title-active");
+                    nomTable6.style.fontWeight = "bold";
+
+                    divTable6.appendChild(tableau6);
+                    divTable6.appendChild(sourceTab6);
                 }
             });
 
